@@ -1,7 +1,7 @@
 import pandas as pd
 
 # 데이터는 positive.txt와 negative.txt 파일 로드
-with open('positive.txt', 'r', encoding='utf-8') as positive_file, open('negative.txt', 'r', encoding='utf-8') as negative_file:
+with open('data/positive.txt', 'r', encoding='utf-8') as positive_file, open('data/negative.txt', 'r', encoding='utf-8') as negative_file:
     positive_words = [line.strip() for line in positive_file.readlines()]
     negative_words = [line.strip() for line in negative_file.readlines()]
 
@@ -10,7 +10,7 @@ with open('positive.txt', 'r', encoding='utf-8') as positive_file, open('negativ
 sentiment_scores = {}
 
 # CSV 파일에서 텍스트 데이터 읽기
-df = pd.read_csv('데일리샷_AOS_reviews.csv')
+df = pd.read_csv('data/데일리샷_AOS_reviews.csv')
 
 
 # 예시 텍스트가 저장된 열 선택 (여기서는 'Text' 열 사용)
