@@ -5,17 +5,14 @@ with open('data/positive.txt', 'r', encoding='utf-8') as positive_file, open('da
     positive_words = [line.strip() for line in positive_file.readlines()]
     negative_words = [line.strip() for line in negative_file.readlines()]
 
-
 # 감정 점수 초기화 (사전에 감정 점수가 있는 경우 사용)
 sentiment_scores = {}
 
 # CSV 파일에서 텍스트 데이터 읽기
 df = pd.read_csv('data/데일리샷_AOS_reviews.csv')
 
-
-# 예시 텍스트가 저장된 열 선택 (여기서는 'Text' 열 사용)
+# 예시 텍스트가 저장된 열 선택 (여기서는 'content' 열 사용)
 texts = df['content']
-
 
 # 감정 분석 및 감정 점수 계산 함수
 def sentiment_analysis(text):
@@ -39,20 +36,11 @@ def sentiment_analysis(text):
             sentiment_words['부정어'].append(word)
 
     # 감정 점수 계산
-    sentiment_score = round((positive_count - negative_count) / len(words),3)
+    sentiment_score = round((positive_count - negative_count) / len(words), 3)
 
     return sentiment_score, sentiment_words
 
-
-# "감정 분석 결과" 열을 튜플 형식으로 반환
-df['감정 분석 결과'] = texts.apply(sentiment_analysis)
-
-
-# 튜플을 분할하여 열을 추가
-df[['감정 점수', '감정 단어']] = pd.DataFrame(df['감정 분석 결과'].to_list(), index=df.index)
-
-
-# DataFrame의 처음 몇 행 출력
-df.iloc[1:15, 8:]
-
-
+# 각 텍스트에 대해 감정 분석 수행 및 결과 출력
+for text in texts:
+    score, words = sentiment_analysis(text)
+    print(f"Text: {text}\nSentiment Score: {score}\nSentiment Words: {words}\n")
